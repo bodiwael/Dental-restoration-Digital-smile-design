@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import 'dart:math' as math;
 import 'package:image/image.dart' as img;
 import '../models/restoration_models.dart';
 
@@ -116,7 +117,7 @@ class TextureRenderer {
     }
     
     // Create output image
-    final result = img.copyImage(originalImage);
+    final result = img.cloneImage(originalImage);
     
     // Get shade color
     final shadeColor = _shadeToRgb(config.shade);
@@ -177,7 +178,8 @@ class TextureRenderer {
     final r = ((pixel.r * 0.7) + (shadeRgb[0] * 0.3)).toInt().clamp(0, 255);
     final g = ((pixel.g * 0.7) + (shadeRgb[1] * 0.3)).toInt().clamp(0, 255);
     final b = ((pixel.b * 0.7) + (shadeRgb[2] * 0.3)).toInt().clamp(0, 255);
-    return img.Pixel.rgba(r, g, b, pixel.a);
+    )
+    return img.ColorRgb8(r, g, b, pixel.a);
   }
   
   /// Luminance-preserving blend between original and texture
@@ -196,15 +198,16 @@ class TextureRenderer {
     // Adjust to match original luminance
     if (blendLum > 0) {
       final lumRatio = origLum / blendLum;
-      return img.Pixel.rgba(
+      return img.ColorRgb8(
         (r * lumRatio).toInt().clamp(0, 255),
         (g * lumRatio).toInt().clamp(0, 255),
         (b * lumRatio).toInt().clamp(0, 255),
         original.a,
       );
     }
+    )
     
-    return img.Pixel.rgba(r, g, b, original.a);
+    return img.ColorRgb8(r, g, b, original.a);
   }
   
   /// Apply gloss highlight based on position
@@ -223,12 +226,13 @@ class TextureRenderer {
     
     final dx = x - centerX;
     final dy = y - centerY;
-    final dist = (dx * dx + dy * dy).sqrt();
+    final dist = sqrt(dx * dx + dy * dy);
     
     if (dist < radius) {
+    )
       final intensity = (1 - dist / radius) * gloss * 0.5;
       final highlight = (255 * intensity).toInt();
-      return img.Pixel.rgba(
+      return img.ColorRgb8(
         (pixel.r + highlight).clamp(0, 255).toInt(),
         (pixel.g + highlight).clamp(0, 255).toInt(),
         (pixel.b + highlight).clamp(0, 255).toInt(),
@@ -267,10 +271,11 @@ class TextureRenderer {
     final avgNeighbor = neighborCount > 0 ? neighborSum / neighborCount : 255;
     final edgeFactor = (255 - avgNeighbor) / 255; // Higher at edges
     
+    )
     if (edgeFactor > 0.1) {
       // Make edges more translucent
       final newAlpha = (pixel.a * (1 - edgeFactor * translucency * 0.5)).toInt().clamp(0, 255);
-      return img.Pixel.rgba(pixel.r, pixel.g, pixel.b, newAlpha);
+      return img.ColorRgb8(pixel.r, pixel.g, pixel.b, newAlpha);
     }
     
     return pixel;
@@ -280,7 +285,7 @@ class TextureRenderer {
   img.Image applyWhitening(img.Image image, int level) {
     if (level <= 0) return image;
     
-    final result = img.copyImage(image);
+    final result = img.cloneImage(image);
     final factor = 1.0 + (level * 0.05); // Up to 50% brighter
     
     for (int y = 0; y < result.height; y++) {
@@ -289,7 +294,7 @@ class TextureRenderer {
         final r = (pixel.r * factor).toInt().clamp(0, 255);
         final g = (pixel.g * factor).toInt().clamp(0, 255);
         final b = (pixel.b * factor).toInt().clamp(0, 255);
-        result.setPixel(x, y, img.Pixel.rgba(r, g, b, pixel.a));
+        result.setPixelRgba(x, y, r, g, b, pixel.a);
       }
     }
     

@@ -57,9 +57,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 }
 
 /// Screen showing list of patient cases
-class PatientCasesScreen extends ConsumerWidget {
+class PatientCasesScreen extends ConsumerStatefulWidget {
   const PatientCasesScreen({super.key});
 
+  @override
+  ConsumerState<PatientCasesScreen> createState() => _PatientCasesScreenState();
+}
+
+class _PatientCasesScreenState extends ConsumerState<PatientCasesScreen> {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final sessionState = ref.watch(sessionNotifierProvider);
@@ -82,7 +87,7 @@ class PatientCasesScreen extends ConsumerWidget {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           // Navigate to new case creation
-          setState(() {}); // Trigger bottom nav change
+          // Trigger bottom nav change via parent
         },
         icon: const Icon(Icons.add),
         label: const Text('New Case'),

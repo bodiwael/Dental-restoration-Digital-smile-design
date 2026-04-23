@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:typed_data';
 
 /// Custom painter for drawing mask outlines on canvas
 class MaskPainter extends CustomPainter {

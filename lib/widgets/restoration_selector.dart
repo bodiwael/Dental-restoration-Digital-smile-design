@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import '../core/models/restoration_models.dart';
+import '../core/models/restoration_models.dart' as models;
 import '../app_theme.dart';
 
 /// Widget for selecting restoration type and material
 class RestorationSelector extends StatelessWidget {
   final RestorationType selectedType;
-  final MaterialType selectedMaterial;
+  final models.MaterialType selectedMaterial;
   final Function(RestorationType) onTypeSelected;
-  final Function(MaterialType) onMaterialSelected;
+  final Function(models.MaterialType) onMaterialSelected;
 
   const RestorationSelector({
     super.key,
@@ -105,65 +105,65 @@ class RestorationSelector extends StatelessWidget {
     }
   }
 
-  List<MaterialType> _getAvailableMaterials(RestorationType type) {
+  List<models.MaterialType> _getAvailableMaterials(RestorationType type) {
     switch (type) {
       case RestorationType.crown:
         return [
-          MaterialType.zirconia,
-          MaterialType.eMax,
-          MaterialType.porcelain,
-          MaterialType.pfm,
-          MaterialType.gold,
-          MaterialType.metal,
+          models.MaterialType.zirconia,
+          models.MaterialType.eMax,
+          models.MaterialType.porcelain,
+          models.MaterialType.pfm,
+          models.MaterialType.gold,
+          models.MaterialType.metal,
         ];
       case RestorationType.bridge:
         return [
-          MaterialType.zirconia,
-          MaterialType.pfm,
-          MaterialType.gold,
+          models.MaterialType.zirconia,
+          models.MaterialType.pfm,
+          models.MaterialType.gold,
         ];
       case RestorationType.veneer:
         return [
-          MaterialType.porcelain,
-          MaterialType.composite,
-          MaterialType.eMax,
+          models.MaterialType.porcelain,
+          models.MaterialType.composite,
+          models.MaterialType.eMax,
         ];
       case RestorationType.implantCrown:
         return [
-          MaterialType.zirconia,
-          MaterialType.eMax,
-          MaterialType.porcelain,
+          models.MaterialType.zirconia,
+          models.MaterialType.eMax,
+          models.MaterialType.porcelain,
         ];
       case RestorationType.partialDenture:
         return [
-          MaterialType.acrylic,
-          MaterialType.metal,
+          models.MaterialType.acrylic,
+          models.MaterialType.metal,
         ];
       case RestorationType.completeDenture:
         return [
-          MaterialType.acrylic,
-          MaterialType.composite,
+          models.MaterialType.acrylic,
+          models.MaterialType.composite,
         ];
     }
   }
 
-  Color _getMaterialColor(MaterialType material) {
+  Color _getMaterialColor(models.MaterialType material) {
     switch (material) {
-      case MaterialType.zirconia:
+      case models.MaterialType.zirconia:
         return const Color(0xFFF5F5F0);
-      case MaterialType.eMax:
+      case models.MaterialType.eMax:
         return const Color(0xFFFAFAF5);
-      case MaterialType.porcelain:
+      case models.MaterialType.porcelain:
         return const Color(0xFFF8F8F0);
-      case MaterialType.pfm:
+      case models.MaterialType.pfm:
         return const Color(0xFFE8E8E0);
-      case MaterialType.gold:
+      case models.MaterialType.gold:
         return const Color(0xFFD4AF37);
-      case MaterialType.metal:
+      case models.MaterialType.metal:
         return const Color(0xFFB0B0B5);
-      case MaterialType.composite:
+      case models.MaterialType.composite:
         return const Color(0xFFF2EEE6);
-      case MaterialType.acrylic:
+      case models.MaterialType.acrylic:
         return const Color(0xFFEBE8E5);
     }
   }
