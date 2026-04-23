@@ -160,7 +160,7 @@ class SessionNotifier extends StateNotifier<SessionState> {
       );
 
       // Create restoration record
-      final restoration = Restoration(
+      final restoration = models.Restoration(
         id: DateTime.now().millisecondsSinceEpoch.toString(),
         config: config,
         maskBytes: maskBytes,
@@ -183,7 +183,7 @@ class SessionNotifier extends StateNotifier<SessionState> {
   }
 
   /// Update DSD configuration
-  void updateDSDConfig(DSDConfig config) {
+  void updateDSDConfig(models.DSDConfig config) {
     state = state.copyWith(dsdConfig: config);
   }
 
@@ -238,7 +238,7 @@ class SessionNotifier extends StateNotifier<SessionState> {
     final caseId = DateTime.now().millisecondsSinceEpoch.toString();
     
     state = state.copyWith(
-      currentCase: PatientCase(
+      currentCase: models.PatientCase(
         id: caseId,
         patientName: patientName,
         restorations: state.appliedRestorations,
