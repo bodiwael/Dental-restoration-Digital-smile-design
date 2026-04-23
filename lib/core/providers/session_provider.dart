@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'dart:typed_data';
 import 'package:image/image.dart' as img;
 
-import '../models/restoration_models.dart';
+import '../models/restoration_models.dart' as models;
 import '../services/mobile_sam_service.dart';
 import '../services/texture_renderer.dart';
 
@@ -18,13 +18,13 @@ final textureRendererProvider = Provider<TextureRenderer>((ref) {
 
 /// Session state for the current patient case
 class SessionState {
-  final PatientCase? currentCase;
+  final models.PatientCase? currentCase;
   final String? loadedImagePath;
   final img.Image? loadedImage;
   final Float32List? imageEmbedding;
-  final List<Restoration> appliedRestorations;
-  final RestorationConfig? pendingConfig;
-  final DSDConfig dsdConfig;
+  final List<models.Restoration> appliedRestorations;
+  final models.RestorationConfig? pendingConfig;
+  final models.DSDConfig dsdConfig;
   final bool isProcessing;
   final String? errorMessage;
 
@@ -35,19 +35,19 @@ class SessionState {
     this.imageEmbedding,
     this.appliedRestorations = const [],
     this.pendingConfig,
-    this.dsdConfig = const DSDConfig(),
+    this.dsdConfig = const models.DSDConfig(),
     this.isProcessing = false,
     this.errorMessage,
   });
 
   SessionState copyWith({
-    PatientCase? currentCase,
+    models.PatientCase? currentCase,
     String? loadedImagePath,
     img.Image? loadedImage,
     Float32List? imageEmbedding,
-    List<Restoration>? appliedRestorations,
-    RestorationConfig? pendingConfig,
-    DSDConfig? dsdConfig,
+    List<models.Restoration>? appliedRestorations,
+    models.RestorationConfig? pendingConfig,
+    models.DSDConfig? dsdConfig,
     bool? isProcessing,
     String? errorMessage,
   }) {
@@ -114,7 +114,7 @@ class SessionNotifier extends StateNotifier<SessionState> {
   }
 
   /// Set pending restoration configuration
-  void setPendingConfig(RestorationConfig config) {
+  void setPendingConfig(models.RestorationConfig config) {
     state = state.copyWith(pendingConfig: config);
   }
 

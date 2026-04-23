@@ -154,7 +154,7 @@ class TextureRenderer {
             config.translucency,
           );
           
-          result.setPixel(x, y, finalPixel);
+          result.setPixelRgb(x, y, finalPixel.r, finalPixel.g, finalPixel.b);
         }
       }
     }
@@ -173,17 +173,16 @@ class TextureRenderer {
   }
   
   /// Apply shade tint to texture pixel
-  img.Pixel _applyShadeTint(img.Pixel pixel, List<int> shadeRgb) {
+  img.ColorRgb8 _applyShadeTint(img.ColorRgb8 pixel, List<int> shadeRgb) {
     // Blend texture with shade color
     final r = ((pixel.r * 0.7) + (shadeRgb[0] * 0.3)).toInt().clamp(0, 255);
     final g = ((pixel.g * 0.7) + (shadeRgb[1] * 0.3)).toInt().clamp(0, 255);
     final b = ((pixel.b * 0.7) + (shadeRgb[2] * 0.3)).toInt().clamp(0, 255);
-    )
-    return img.ColorRgb8(r, g, b, pixel.a);
+    return img.ColorRgb8(r, g, b);
   }
   
   /// Luminance-preserving blend between original and texture
-  img.Pixel _luminanceBlend(img.Pixel original, img.Pixel texture, double opacity) {
+  img.ColorRgb8 _luminanceBlend(img.ColorRgb8 original, img.ColorRgb8 texture, double opacity) {
     // Calculate original luminance
     final origLum = 0.299 * original.r + 0.587 * original.g + 0.114 * original.b;
     
@@ -202,17 +201,15 @@ class TextureRenderer {
         (r * lumRatio).toInt().clamp(0, 255),
         (g * lumRatio).toInt().clamp(0, 255),
         (b * lumRatio).toInt().clamp(0, 255),
-        original.a,
       );
     }
-    )
     
-    return img.ColorRgb8(r, g, b, original.a);
+    return img.ColorRgb8(r, g, b);
   }
   
   /// Apply gloss highlight based on position
-  img.Pixel _applyGloss(
-    img.Pixel pixel,
+  img.ColorRgb8 _applyGloss(
+    img.ColorRgb8 pixel,
     int x, int y,
     int width, int height,
     double gloss,
@@ -226,17 +223,15 @@ class TextureRenderer {
     
     final dx = x - centerX;
     final dy = y - centerY;
-    final dist = sqrt(dx * dx + dy * dy);
+    final dist = math.sqrt(dx * dx + dy * dy);
     
     if (dist < radius) {
-    )
       final intensity = (1 - dist / radius) * gloss * 0.5;
       final highlight = (255 * intensity).toInt();
       return img.ColorRgb8(
         (pixel.r + highlight).clamp(0, 255).toInt(),
         (pixel.g + highlight).clamp(0, 255).toInt(),
         (pixel.b + highlight).clamp(0, 255).toInt(),
-        pixel.a,
       );
     }
     
@@ -244,8 +239,8 @@ class TextureRenderer {
   }
   
   /// Apply translucency at mask edges
-  img.Pixel _applyTranslucencyEdge(
-    img.Pixel pixel,
+  img.ColorRgb8 _applyTranslucencyEdge(
+    img.ColorRgb8 pixel,
     int x, int y,
     img.Image mask,
     double translucency,
@@ -271,11 +266,10 @@ class TextureRenderer {
     final avgNeighbor = neighborCount > 0 ? neighborSum / neighborCount : 255;
     final edgeFactor = (255 - avgNeighbor) / 255; // Higher at edges
     
-    )
     if (edgeFactor > 0.1) {
       // Make edges more translucent
       final newAlpha = (pixel.a * (1 - edgeFactor * translucency * 0.5)).toInt().clamp(0, 255);
-      return img.ColorRgb8(pixel.r, pixel.g, pixel.b, newAlpha);
+      return img.ColorRgb8(pixel.r, pixel.g, pixel.b);
     }
     
     return pixel;

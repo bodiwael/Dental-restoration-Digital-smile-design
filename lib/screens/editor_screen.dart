@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
+import 'dart:math' as math;
 import 'package:image/image.dart' as img;
 
 import '../core/providers/session_provider.dart';
@@ -21,9 +22,9 @@ class EditorScreen extends ConsumerStatefulWidget {
 }
 
 class _EditorScreenState extends ConsumerState<EditorScreen> {
-  RestorationType _selectedType = RestorationType.crown;
-  MaterialType _selectedMaterial = MaterialType.zirconia;
-  VitaShade _selectedShade = VitaShade.A2;
+  models.RestorationType _selectedType = models.RestorationType.crown;
+  models.MaterialType _selectedMaterial = models.MaterialType.zirconia;
+  models.VitaShade _selectedShade = models.VitaShade.A2;
   bool _showBeforeAfter = false;
   double _beforeAfterPosition = 0.5;
 
@@ -304,7 +305,7 @@ class _EditorScreenState extends ConsumerState<EditorScreen> {
   }
 
   void _updatePendingConfig(SessionState state) {
-    final config = RestorationConfig(
+    final config = models.RestorationConfig(
       type: _selectedType,
       material: _selectedMaterial,
       shade: _selectedShade,
