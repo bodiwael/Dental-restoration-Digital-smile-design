@@ -134,13 +134,21 @@ class TextureRenderer {
           var texturePixel = texture.getPixel(textureX, textureY);
           
           // Convert to ColorRgb8 for processing
-          final textureColor = img.ColorRgb8(texturePixel.r, texturePixel.g, texturePixel.b);
+          final textureColor = img.ColorRgb8(
+            texturePixel.r.toInt(), 
+            texturePixel.g.toInt(), 
+            texturePixel.b.toInt()
+          );
           
           // Apply shade tint to texture
           final shadedTexture = _applyShadeTint(textureColor, shadeColor);
           
           // Convert original pixel to ColorRgb8
-          final originalColor = img.ColorRgb8(originalPixel.r, originalPixel.g, originalPixel.b);
+          final originalColor = img.ColorRgb8(
+            originalPixel.r.toInt(), 
+            originalPixel.g.toInt(), 
+            originalPixel.b.toInt()
+          );
           
           // Luminance-preserving blend
           final blended = _luminanceBlend(
@@ -264,18 +272,18 @@ class TextureRenderer {
         final ny = y + dy;
         if (nx >= 0 && nx < mask.width && ny >= 0 && ny < mask.height) {
           neighborCount++;
-          neighborSum += mask.getPixel(nx, ny).a;
+          neighborSum += mask.getPixel(nx, ny).a.toInt();
         }
       }
     }
     
-    final avgNeighbor = neighborCount > 0 ? neighborSum / neighborCount : 255;
+    final avgNeighbor = neighborCount > 0 ? neighborSum / neighborCount : 255.0;
     final edgeFactor = (255 - avgNeighbor) / 255; // Higher at edges
     
     if (edgeFactor > 0.1) {
       // Make edges more translucent
       final newAlpha = (pixel.a * (1 - edgeFactor * translucency * 0.5)).toInt().clamp(0, 255);
-      return img.ColorRgb8(pixel.r, pixel.g, pixel.b);
+      return img.ColorRgb8(pixel.r.toInt(), pixel.g.toInt(), pixel.b.toInt());
     }
     
     return pixel;
