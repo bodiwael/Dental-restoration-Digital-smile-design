@@ -1,33 +1,47 @@
 ```
-# Build artifacts
-*.dart_tool/
-*.flutter-plugins/
-*.flutter-plugins-dependencies
-*.packages
+# Compiled and build artifacts
+*.pyc
+__pycache__/
+*.o
+*.obj
+*.class
+*.exe
+*.dll
+*.so
+*.a
+*.out
 
 # Dependencies
-**/node_modules/
-**/.pub-cache/
-**/.pub/
-packages/
-
-# Logs
-*.log
-**/logs/
-
-# Environment variables
+node_modules/
+venv/
+.venv/
 .env
 .env.local
 .env.*
-!.env.example
 
-# IDE specific
+# Build outputs
+dist/
+build/
+target/
+*.log
+*.tmp
+*.swp
+
+# Editors
 .vscode/
 .idea/
-*.swp
-*.swo
 
-# OS generated files
-.DS_Store
-Thumbs.db
+# Coverage
+coverage/
+htmlcov/
+.coverage
+
+# Gradle
+.gradle/
+
+# MyPy
+.mypy_cache/
+
+# Pytest
+.pytest_cache/
 ```

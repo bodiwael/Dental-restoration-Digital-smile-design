@@ -117,7 +117,7 @@ class TextureRenderer {
     }
     
     // Create output image
-    final result = img.cloneImage(originalImage);
+    final result = img.Image.from(originalImage);
     
     // Get shade color
     final shadeColor = _shadeToRgb(config.shade);
@@ -133,13 +133,19 @@ class TextureRenderer {
           final textureY = (y * texture.height / result.height).floor() % texture.height;
           var texturePixel = texture.getPixel(textureX, textureY);
           
+          // Convert to ColorRgb8 for processing
+          final textureColor = img.ColorRgb8(texturePixel.r, texturePixel.g, texturePixel.b);
+          
           // Apply shade tint to texture
-          texturePixel = _applyShadeTint(texturePixel, shadeColor);
+          final shadedTexture = _applyShadeTint(textureColor, shadeColor);
+          
+          // Convert original pixel to ColorRgb8
+          final originalColor = img.ColorRgb8(originalPixel.r, originalPixel.g, originalPixel.b);
           
           // Luminance-preserving blend
           final blended = _luminanceBlend(
-            originalPixel,
-            texturePixel,
+            originalColor,
+            shadedTexture,
             config.opacity,
           );
           
@@ -279,7 +285,7 @@ class TextureRenderer {
   img.Image applyWhitening(img.Image image, int level) {
     if (level <= 0) return image;
     
-    final result = img.cloneImage(image);
+    final result = img.Image.from(image);
     final factor = 1.0 + (level * 0.05); // Up to 50% brighter
     
     for (int y = 0; y < result.height; y++) {
@@ -288,7 +294,7 @@ class TextureRenderer {
         final r = (pixel.r * factor).toInt().clamp(0, 255);
         final g = (pixel.g * factor).toInt().clamp(0, 255);
         final b = (pixel.b * factor).toInt().clamp(0, 255);
-        result.setPixelRgba(x, y, r, g, b, pixel.a);
+        result.setPixelRgb(x, y, r, g, b);
       }
     }
     
