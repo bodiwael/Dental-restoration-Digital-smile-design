@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
+import 'package:image/image.dart' as img;
 
 import '../core/providers/session_provider.dart';
-import '../core/models/restoration_models.dart';
+import '../core/models/restoration_models.dart' as models;
 import '../app_theme.dart';
 import '../widgets/mask_painter.dart';
 import '../widgets/before_after_viewer.dart';

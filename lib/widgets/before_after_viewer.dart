@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:typed_data';
 
 /// Widget for before/after comparison with draggable divider
 class BeforeAfterViewer extends StatefulWidget {
@@ -90,7 +91,7 @@ class _BeforeAfterViewerState extends State<BeforeAfterViewer> {
                         ],
                       ),
                       child: const Icon(
-                        Icons.arrows_leftright_rounded,
+                        Icons.drag_handle,
                         size: 20,
                         color: Colors.blue,
                       ),
