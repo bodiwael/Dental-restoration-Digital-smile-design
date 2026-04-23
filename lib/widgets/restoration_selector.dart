@@ -4,9 +4,9 @@ import '../app_theme.dart';
 
 /// Widget for selecting restoration type and material
 class RestorationSelector extends StatelessWidget {
-  final RestorationType selectedType;
+  final models.RestorationType selectedType;
   final models.MaterialType selectedMaterial;
-  final Function(RestorationType) onTypeSelected;
+  final Function(models.RestorationType) onTypeSelected;
   final Function(models.MaterialType) onMaterialSelected;
 
   const RestorationSelector({
@@ -35,7 +35,7 @@ class RestorationSelector extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Row(
-        children: RestorationType.values.map((type) {
+        children: models.RestorationType.values.map((type) {
           final isSelected = selectedType == type;
           return Padding(
             padding: const EdgeInsets.only(right: 8),
@@ -88,26 +88,26 @@ class RestorationSelector extends StatelessWidget {
     );
   }
 
-  String _getTypeName(RestorationType type) {
+  String _getTypeName(models.RestorationType type) {
     switch (type) {
-      case RestorationType.crown:
+      case models.RestorationType.crown:
         return 'Crown';
-      case RestorationType.bridge:
+      case models.RestorationType.bridge:
         return 'Bridge';
-      case RestorationType.veneer:
+      case models.RestorationType.veneer:
         return 'Veneer';
-      case RestorationType.implantCrown:
+      case models.RestorationType.implantCrown:
         return 'Implant';
-      case RestorationType.partialDenture:
+      case models.RestorationType.partialDenture:
         return 'Partial';
-      case RestorationType.completeDenture:
+      case models.RestorationType.completeDenture:
         return 'Complete';
     }
   }
 
-  List<models.MaterialType> _getAvailableMaterials(RestorationType type) {
+  List<models.MaterialType> _getAvailableMaterials(models.RestorationType type) {
     switch (type) {
-      case RestorationType.crown:
+      case models.RestorationType.crown:
         return [
           models.MaterialType.zirconia,
           models.MaterialType.eMax,
@@ -116,30 +116,30 @@ class RestorationSelector extends StatelessWidget {
           models.MaterialType.gold,
           models.MaterialType.metal,
         ];
-      case RestorationType.bridge:
+      case models.RestorationType.bridge:
         return [
           models.MaterialType.zirconia,
           models.MaterialType.pfm,
           models.MaterialType.gold,
         ];
-      case RestorationType.veneer:
+      case models.RestorationType.veneer:
         return [
           models.MaterialType.porcelain,
           models.MaterialType.composite,
           models.MaterialType.eMax,
         ];
-      case RestorationType.implantCrown:
+      case models.RestorationType.implantCrown:
         return [
           models.MaterialType.zirconia,
           models.MaterialType.eMax,
           models.MaterialType.porcelain,
         ];
-      case RestorationType.partialDenture:
+      case models.RestorationType.partialDenture:
         return [
           models.MaterialType.acrylic,
           models.MaterialType.metal,
         ];
-      case RestorationType.completeDenture:
+      case models.RestorationType.completeDenture:
         return [
           models.MaterialType.acrylic,
           models.MaterialType.composite,

@@ -108,7 +108,7 @@ extension VitaShadeExtension on VitaShade {
       case VitaShade.C4: return 0xFFF9DCC7;
       case VitaShade.D2: return 0xFFFDEEE0;
       case VitaShade.D3: return 0xFFFCE5D5;
-      case VitaShade.D4: return 0xFFFBDC CA;
+      case VitaShade.D4: return 0xFFFBDCCA;
     }
   }
 }

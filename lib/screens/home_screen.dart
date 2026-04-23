@@ -66,7 +66,7 @@ class PatientCasesScreen extends ConsumerStatefulWidget {
 
 class _PatientCasesScreenState extends ConsumerState<PatientCasesScreen> {
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final sessionState = ref.watch(sessionNotifierProvider);
 
     return Scaffold(
