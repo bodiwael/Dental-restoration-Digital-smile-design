@@ -1,0 +1,37 @@
+```
+# Dependencies
+.dart_tool/
+.packages
+.pub/
+
+# Build outputs
+build/
+**/generated_plugin_registrant.*
+
+# Environment
+.env
+.env.local
+.env.*
+
+# Logs
+*.log
+**/logs
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Coverage
+coverage/
+
+# Temporary files
+*.tmp
+*.temp
+```
